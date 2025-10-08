@@ -3,8 +3,13 @@ export class User {
   private _name: string;
   private _email: string;
   private _password: string;
-  constructor(id: string, name: string, email: string, password: string) {
-    this._id = id;
+  constructor(
+    id: string | null,
+    name: string,
+    email: string,
+    password: string
+  ) {
+    this._id = id ? id : this.generateId();
     this._name = name;
     this._email = email;
     this._password = password;
@@ -28,10 +33,10 @@ export class User {
     return this._password;
   }
 
+  private generateId(): string {
+    return Math.random().toString(36).substring(2, 9);
+  }
   private validate(): void {
-    if (!this._id) {
-      throw new Error("Id is required");
-    }
     if (!this._name) {
       throw new Error("Name is required");
     }
